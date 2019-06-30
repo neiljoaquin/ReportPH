@@ -1,6 +1,8 @@
 # ReportPH
 An android application that is used to crowd source crime information
 
+A sample application that uses ViewModel, LiveData, DataBinding, RetroFit and RxJava. 
+
 *Has not been uploaded to google play since I'm still thinking about how to verify reports e.g. upvote or downvote, or let the authorities upvote or downvote*
 
 #### Important notes
