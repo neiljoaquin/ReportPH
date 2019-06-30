@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@color/quantum_grey900"
+        android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+                                           android:id="@+id/scrollview"
+                                           android:layout_gravity="center"
+                                           android:layout_marginTop="16dp"
+                                           android:layout_marginBottom="16dp"
+                                           android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="vertical"
+                      android:layout_height="match_parent">
+
+            <TextView android:layout_width="match_parent"
+                      android:text="@string/please_enter_code"
+                      android:layout_marginStart="16dp"
+                      android:layout_marginEnd="16dp"
+                      android:layout_marginBottom="8dp"
+                      android:layout_marginTop="8dp"
+                      android:textColor="@color/quantum_white_100"
+                      android:layout_height="wrap_content"/>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:orientation="horizontal"
+                          android:layout_height="match_parent">
+
+                <View
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+
+                <LinearLayout android:layout_width="0dp"
+                              android:orientation="vertical"
+                              android:layout_weight="10"
+                              android:layout_height="match_parent">
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/text_input_code"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_height="wrap_content"
+                            app:hintEnabled="false"
+                            app:boxStrokeColor="@color/quantum_white_100"
+                            app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:id="@+id/edit_text_code"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/code"/>
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="16dp"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+                <View
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+            app:backgroundTint="@color/quantum_grey900"
+            android:textColor="@color/quantum_white_100"
+            style="@style/Widget.MaterialComponents.Button"
+            android:text="@string/retry_sending_code"
+            app:layout_anchor="@id/space1"
+            app:layout_anchorGravity="start|bottom"
+            android:layout_margin="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <View
+            android:layout_width="195dp"
+            android:id="@+id/space1"
+            app:layout_anchor="@id/submit_button"
+            app:layout_anchorGravity="bottom|start"
+            android:layout_margin="16dp"
+            android:layout_height="wrap_content"/>
+
+    <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button"
+            android:id="@+id/submit_button"
+            android:layout_width="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:text="@string/submit_number"
+            android:layout_margin="16dp"
+            app:backgroundTint="@color/quantum_grey900"
+            android:textColor="@color/quantum_white_100"
+            android:layout_height="wrap_content"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+                name="reports"
+                type="com.neil.reportph.viewModels.ReportsViewModel" />
+        <variable
+                name="dialogBuilder"
+                type="com.neil.reportph.DialogBuilder"/>
+        <variable
+                name="activity"
+                type="com.neil.reportph.activities.ReportCrimeActivity"/>
+    </data>
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:id="@+id/app_bar_report"
+            android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                app:navigationIcon="@drawable/baseline_close_white_24"
+                app:titleTextColor="@color/quantum_white_100"
+                android:layout_width="match_parent"
+                android:visibility="@{reports.visibilityLayout}"
+                app:navigationOnClickListener="@{view -> activity.finish()}"
+                android:layout_height="wrap_content">
+        </androidx.appcompat.widget.Toolbar>
+
+        <ProgressBar
+                android:id="@+id/progressbar"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="150dp"
+                android:indeterminate="true"
+                android:visibility="@{reports.visibilityProgressBar}"
+                android:background="@color/quantum_grey900"
+                android:indeterminateTint="@color/quantum_white_100"/>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/quantum_grey900"
+                android:id="@+id/coordinator_layout"
+                android:visibility="@{reports.visibilityLayout}"
+                android:orientation="vertical">
+
+            <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+                                                   android:layout_height="match_parent">
+                <LinearLayout android:layout_width="match_parent"
+                              android:orientation="vertical"
+                              android:layout_height="match_parent">
+
+                    <TextView android:layout_width="match_parent"
+                              android:text="@string/report_a_crime"
+                              android:layout_marginBottom="16dp"
+                              android:gravity="center"
+                              android:textSize="40dp"
+                              android:textColor="@color/quantum_white_100"
+                              android:layout_height="wrap_content"/>
+
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:orientation="horizontal"
+                                  android:layout_height="match_parent">
+
+                        <View
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="match_parent"/>
+
+                        <LinearLayout android:layout_width="0dp"
+                                      android:orientation="vertical"
+                                      android:layout_weight="10"
+                                      android:layout_height="match_parent">
+
+                            <Spinner
+                                android:id="@+id/spinner_crime"
+                                android:layout_width="match_parent"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_height="wrap_content"/>
+                            <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="2dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:background="@color/quantum_grey700"/>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/text_input_other"
+                                    android:layout_width="match_parent"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:layout_height="wrap_content"
+                                    app:boxStrokeColor="@color/quantum_white_100"
+                                    android:visibility="@{reports.visibilityOtherCrime}"
+                                    app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/edit_text_other"
+                                        android:text="@={reports.crime}"
+                                        android:visibility="@{reports.visibilityOtherCrime}"
+                                        android:hint="Type of crime"/>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/text_input_date"
+                                android:layout_width="match_parent"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_height="wrap_content"
+                                app:boxStrokeColor="@color/quantum_white_100"
+                                app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:id="@+id/edit_text_date"
+                                    android:layout_height="wrap_content"
+                                    app:keyListener='@{null}'
+                                    app:onClickListener="@{view -> reports.showPickerDialog(view, true, dialogBuilder.getDatePickerDialog(view, activity))}"
+                                    app:focusChangeListener="@{(view, focus) -> reports.showPickerDialog(view, focus, dialogBuilder.getDatePickerDialog(view, activity))}"
+                                    android:text="@={reports.date}"
+                                    android:hint="@string/date"/>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/text_input_time"
+                                    android:layout_width="match_parent"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:layout_height="wrap_content"
+                                    app:boxStrokeColor="@color/quantum_white_100"
+                                    app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:id="@+id/edit_text_time"
+                                        android:layout_height="wrap_content"
+                                        app:keyListener='@{null}'
+                                        app:onClickListener="@{view -> reports.showPickerDialog(view, true, dialogBuilder.getTimePickerDialog(view, activity))}"
+                                        app:focusChangeListener="@{(view, focus) -> reports.showPickerDialog(view, focus, dialogBuilder.getTimePickerDialog(view, activity))}"
+                                        android:text="@={reports.time}"
+                                        android:hint="@string/time"/>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/text_input_describe"
+                                    android:layout_width="match_parent"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:layout_height="wrap_content"
+                                    app:boxStrokeColor="@color/quantum_white_100"
+                                    app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/edit_text_description"
+                                        android:text="@={reports.description}"
+                                        android:hint="@string/describe"/>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+                        <View
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="match_parent"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+</layout>
