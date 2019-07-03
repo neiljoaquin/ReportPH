@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -15,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
 import com.neil.reportph.Logger
 import com.neil.reportph.firebase.FirebaseStorage
 import com.neil.reportph.models.Reports
@@ -30,8 +33,15 @@ class MapsViewModel: ViewModel() {
         const val REQUEST_FINE_LOCATION = 0
         const val TAG = "MapsViewModel"
     }
+    val visibilityReport: MutableLiveData<Int> = MutableLiveData<Int>()
+    val visibilityCancel: MutableLiveData<Int> = MutableLiveData<Int>()
     var map: GoogleMap? = null
     private var workerThread: Thread? = null
+
+    init {
+        visibilityCancel.value = View.GONE
+        visibilityReport.value = View.VISIBLE
+    }
 
     fun initMap(googleMap: GoogleMap, activity: Activity) {
         map = googleMap
@@ -84,6 +94,19 @@ class MapsViewModel: ViewModel() {
 
         }
     }
+
+    fun setOnMapClickListener(view: View, isReport: Boolean) {
+
+        if(isReport && visibilityReport.value != View.GONE) {
+            visibilityReport.value = View.GONE
+            visibilityCancel.value = View.VISIBLE
+            Snackbar.make(view, "Click on the map where the incident happened", Snackbar.LENGTH_LONG).show()
+        } else if(!isReport && visibilityReport.value != View.VISIBLE) {
+            visibilityReport.value = View.VISIBLE
+            visibilityCancel.value = View.GONE
+        }
+    }
+
 
     private fun onNextReport(report: Reports) {
         val latLng = LatLng(report.latitude, report.longtitude)

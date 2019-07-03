@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import androidx.databinding.DataBindingUtil
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -15,8 +16,12 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import com.neil.reportph.Logger
 import com.neil.reportph.R
+import com.neil.reportph.databinding.ActivityMapsBinding
+import com.neil.reportph.databinding.ReportCrimeActivityBinding
 import com.neil.reportph.viewModels.MapsViewModel
 import com.neil.reportph.viewModels.MapsViewModel.Companion.REQUEST_FINE_LOCATION
 import com.neil.reportph.viewModels.MapsViewModel.Companion.MIN_ZOOM
@@ -34,7 +39,9 @@ class MapsActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(MapsViewModel::class.java)
 
-        setContentView(R.layout.activity_maps)
+        val binding: ActivityMapsBinding = DataBindingUtil.setContentView(this, R.layout.activity_maps)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         displayAutoCorrectUI()
 
@@ -50,6 +57,13 @@ class MapsActivity : AppCompatActivity() {
         viewModel.map?.setOnCameraIdleListener { viewModel.onCameraIdle(false) }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(viewModel.visibilityReport.value != View.VISIBLE) {
+            viewModel.map?.setOnMapClickListener{p0 -> onMapClick(p0)}
+        }
+    }
+
     private fun onMarkerClickListener(p0: Marker?): Boolean {
         Logger.d(TAG, "pressed "+p0?.title)
         return false
@@ -60,7 +74,13 @@ class MapsActivity : AppCompatActivity() {
     }
 
     fun setMapOnClickListener(v: View) {
+        viewModel.setOnMapClickListener(v, true)
         viewModel.map?.setOnMapClickListener{p0 -> onMapClick(p0)}
+    }
+
+    fun setCancelOnMapClickListener(v: View) {
+        viewModel.setOnMapClickListener(v, false)
+        viewModel.map?.setOnMapClickListener(null)
     }
 
     fun getCurrentLocation(v: View){

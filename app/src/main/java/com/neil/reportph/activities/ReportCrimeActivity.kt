@@ -34,7 +34,7 @@ class ReportCrimeActivity : AppCompatActivity(),TimePickerDialog.OnTimeSetListen
         viewModel = ViewModelProviders.of(this).get(ReportsViewModel::class.java)
 
         val binding: ReportCrimeActivityBinding = DataBindingUtil.setContentView(this, R.layout.report_crime_activity)
-        binding.reports = viewModel
+        binding.viewModel = viewModel
         binding.lifecycleOwner = this
         binding.dialogBuilder = DialogBuilder()
         binding.activity = this
