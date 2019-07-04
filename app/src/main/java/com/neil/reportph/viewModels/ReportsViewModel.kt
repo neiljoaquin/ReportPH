@@ -12,6 +12,7 @@ import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
 import com.google.android.gms.maps.model.LatLng
+import com.neil.reportph.Constants
 import com.neil.reportph.Logger
 import com.neil.reportph.R
 import com.neil.reportph.firebase.FirebaseStorage
@@ -24,13 +25,13 @@ import io.reactivex.schedulers.Schedulers
 
 class ReportsViewModel: ViewModel() {
     private val TAG = "ReportsViewModel"
-    val crime: MutableLiveData<String> = MutableLiveData<String>()
-    val date: MutableLiveData<String> = MutableLiveData<String>()
-    val time: MutableLiveData<String> = MutableLiveData<String>()
-    val description: MutableLiveData<String> = MutableLiveData<String>()
-    val visibilityProgressBar: MutableLiveData<Int> = MutableLiveData<Int>()
-    val visibilityLayout: MutableLiveData<Int> = MutableLiveData<Int>()
-    val visibilityOtherCrime: MutableLiveData<Int> = MutableLiveData<Int>()
+    val crime: MutableLiveData<String> = MutableLiveData()
+    val date: MutableLiveData<String> = MutableLiveData()
+    val time: MutableLiveData<String> = MutableLiveData()
+    val description: MutableLiveData<String> = MutableLiveData()
+    val visibilityProgressBar: MutableLiveData<Int> = MutableLiveData()
+    val visibilityLayout: MutableLiveData<Int> = MutableLiveData()
+    val visibilityOtherCrime: MutableLiveData<Int> = MutableLiveData()
     private var workerThread: Thread? = null
 
     private var emitter: ObservableEmitter<String>? = null
@@ -44,15 +45,16 @@ class ReportsViewModel: ViewModel() {
     fun onSetCrime(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
         if(pos == 7) {
             visibilityOtherCrime.value = View.VISIBLE
-            this.crime.value = ""
+            crime.value = Constants.STRING_EMPTY
         } else {
             visibilityOtherCrime.value = View.GONE
-            this.crime.value = parent.getItemAtPosition(pos).toString()
+            crime.value = parent.getItemAtPosition(pos).toString()
         }
+        Logger.i(TAG, "set crime: ${crime.value}")
     }
 
     fun onSetDate(view: DatePicker, yy: Int, mm: Int, dd: Int, context: Context){
-        var date = String.format(context.getString(R.string.date_template), mm, dd+1, yy)
+        val date = String.format(context.getString(R.string.date_template), mm, dd+1, yy)
         Logger.i(TAG, "set date: $date")
         this.date.value = date
     }
@@ -74,14 +76,14 @@ class ReportsViewModel: ViewModel() {
             }
         }
 
-        var time = String.format(context.getString(R.string.time_template), hourOf12HourFormat, minuteString, status)
+        val time = String.format(context.getString(R.string.time_template), hourOf12HourFormat, minuteString, status)
         Logger.i(TAG, "set time: $time")
         this.time.value = time
     }
 
     private fun isAllFieldsCompleted(): Boolean {
         if(date.value != null && time.value != null && description.value != null
-            && !date.value!!.isEmpty() && !time.value!!.isEmpty() && !description.value!!.isEmpty()){
+            && date.value!!.isNotEmpty() && time.value!!.isNotEmpty() && description.value!!.isNotEmpty()){
             return true
         }
         return false
@@ -108,7 +110,6 @@ class ReportsViewModel: ViewModel() {
 
     fun onMenuClick(activity: Activity, latLng: LatLng): Boolean{
         if(isAllFieldsCompleted()) {
-
             hideKeyboard(activity)
             visibilityLayout.value = View.GONE
             visibilityProgressBar.value = View.VISIBLE
@@ -127,8 +128,8 @@ class ReportsViewModel: ViewModel() {
             }
             workerThread?.start()
         } else {
-            //TODO put this to strings
-            Toast.makeText(activity, "Please make sure you have input on all fields.", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, activity.applicationContext.getString(R.string.please_make_sure_you_have_input_on_all_fields),
+                Toast.LENGTH_LONG).show()
         }
         Logger.i(TAG, "submit!")
         return true

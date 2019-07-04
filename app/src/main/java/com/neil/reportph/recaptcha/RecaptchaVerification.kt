@@ -21,12 +21,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RecaptchaVerification: OnSuccessListener<SafetyNetApi.RecaptchaTokenResponse>,
         OnFailureListener {
-    companion object{
-        val TAG = "RecaptchaVerification"
-        val GOOGLE_URL = "https://www.google.com/"
-        val RESPONSE = "response"
-        val SECRET = "secret"
-    }
+    private val TAG = "RecaptchaVerification"
+    private val GOOGLE_URL = "https://www.google.com/"
+    private val RESPONSE = "response"
+    private val SECRET = "secret"
+
     private var emitter: SingleEmitter<Boolean>? = null
 
     fun getObservable(): Single<Boolean> {
@@ -41,11 +40,11 @@ class RecaptchaVerification: OnSuccessListener<SafetyNetApi.RecaptchaTokenRespon
     }
 
 
-    fun startRecaptchaVerification(response: String) {
+    private fun startRecaptchaVerification(response: String) {
         Logger.i(TAG, "Start captcha verification via site")
         val params = HashMap<String, String>()
-        params.put(RESPONSE, response)
-        params.put(SECRET, BuildConfig.ReportPH_Recaptcha_Secret_Key)
+        params[RESPONSE] = response
+        params[SECRET] = BuildConfig.ReportPH_Recaptcha_Secret_Key
 
         val retrofit = Retrofit.Builder()
             .baseUrl(GOOGLE_URL)

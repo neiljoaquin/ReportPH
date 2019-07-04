@@ -10,11 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.*
 import com.google.android.gms.maps.model.LatLng
+import com.neil.reportph.Constants
 import com.neil.reportph.DialogBuilder
 import com.neil.reportph.Logger
 import com.neil.reportph.R
 import com.neil.reportph.databinding.ReportCrimeActivityBinding
-import com.neil.reportph.viewModels.MapsViewModel
 import com.neil.reportph.viewModels.ReportsViewModel
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
@@ -29,6 +29,7 @@ class ReportCrimeActivity : AppCompatActivity(),TimePickerDialog.OnTimeSetListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         Logger.d(TAG, "onCreate")
 
         viewModel = ViewModelProviders.of(this).get(ReportsViewModel::class.java)
@@ -39,7 +40,7 @@ class ReportCrimeActivity : AppCompatActivity(),TimePickerDialog.OnTimeSetListen
         binding.dialogBuilder = DialogBuilder()
         binding.activity = this
 
-        latLng = intent.getParcelableExtra<LatLng>(MapsViewModel.LAT_LNG)
+        latLng = intent.getParcelableExtra(Constants.LAT_LNG)
 
         //add listener in check in toolbar
         toolbar.setOnMenuItemClickListener { viewModel.onMenuClick(this, latLng) }
@@ -78,7 +79,7 @@ class ReportCrimeActivity : AppCompatActivity(),TimePickerDialog.OnTimeSetListen
         })
     }
 
-    fun addValueToSpinners(id: Int, range_array: Int) {
+    private fun addValueToSpinners(id: Int, range_array: Int) {
         val spinner: Spinner? = findViewById(id)
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter.createFromResource(

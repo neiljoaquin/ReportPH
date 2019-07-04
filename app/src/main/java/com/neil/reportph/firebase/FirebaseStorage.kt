@@ -12,12 +12,10 @@ import io.reactivex.SingleEmitter
 
 
 class FirebaseStorage {
-    companion object {
-        private val TAG = "FirebaseStorage"
-        private val LONGTITUDE = "longtitude"
-        private val LATITUDE = "latitude"
-        private val REPORTS = "reports"
-    }
+    private val TAG = "FirebaseStorage"
+    private val LONGTITUDE = "longtitude"
+    private val LATITUDE = "latitude"
+    private val REPORTS = "reports"
     private var singleEmitter: SingleEmitter<Boolean>? = null
     private var observableEmitter: ObservableEmitter<Reports>? = null
 
@@ -60,7 +58,7 @@ class FirebaseStorage {
         }
     }
 
-    fun findIntersectionInQuery(list: List<Any>) {
+    private fun findIntersectionInQuery(list: List<Any>) {
         for (item in list) {
             val documents = item as QuerySnapshot
 

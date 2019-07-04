@@ -4,7 +4,7 @@
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
             android:id="@+id/action_check"
-            android:icon="@drawable/baseline_check_white_24"
+            android:icon="@drawable/baseline_check_24"
             android:title="@string/submit_report"
             app:showAsAction="always"/>
 

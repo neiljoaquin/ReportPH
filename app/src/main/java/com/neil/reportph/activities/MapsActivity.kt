@@ -16,15 +16,10 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
 import com.neil.reportph.Logger
 import com.neil.reportph.R
 import com.neil.reportph.databinding.ActivityMapsBinding
-import com.neil.reportph.databinding.ReportCrimeActivityBinding
 import com.neil.reportph.viewModels.MapsViewModel
-import com.neil.reportph.viewModels.MapsViewModel.Companion.REQUEST_FINE_LOCATION
-import com.neil.reportph.viewModels.MapsViewModel.Companion.MIN_ZOOM
 import java.util.*
 
 
@@ -51,6 +46,7 @@ class MapsActivity : AppCompatActivity() {
     }
 
     private fun onMapReady(googleMap: GoogleMap) {
+        Logger.d(TAG, "onMapReady")
         viewModel.initMap(googleMap, this)
         viewModel.map?.setOnMarkerClickListener{p0 -> onMarkerClickListener(p0)}
         viewModel.map?.setOnInfoWindowClickListener{p0 -> onInfoWindowClickListener(p0)}
@@ -59,13 +55,14 @@ class MapsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        Logger.d(TAG, "onResume")
         if(viewModel.visibilityReport.value != View.VISIBLE) {
             viewModel.map?.setOnMapClickListener{p0 -> onMapClick(p0)}
         }
     }
 
     private fun onMarkerClickListener(p0: Marker?): Boolean {
-        Logger.d(TAG, "pressed "+p0?.title)
+        Logger.d(TAG, "Pressed "+p0?.title)
         return false
     }
 
@@ -92,14 +89,14 @@ class MapsActivity : AppCompatActivity() {
     }
 
 
-    fun displayAutoCorrectUI() {
+    private fun displayAutoCorrectUI() {
         // Initialize Places.
         Places.initialize(applicationContext, getString(R.string.google_maps_key))
 
         // Create a new Places client instance.
         val placesClient = Places.createClient(this)
 
-        var autocompleteFragment: AutocompleteSupportFragment =
+        val autocompleteFragment: AutocompleteSupportFragment =
             supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
         // Specify the types of place data to return.
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG))
@@ -107,7 +104,7 @@ class MapsActivity : AppCompatActivity() {
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
-                viewModel.animateCamera(CameraUpdateFactory.zoomTo(MIN_ZOOM), place.latLng)
+                viewModel.animateCamera(CameraUpdateFactory.zoomTo(viewModel.MIN_ZOOM), place.latLng)
                 Logger.i(TAG, "Place: " + place.name + ", " + place.id+", "+place.latLng)
             }
 
@@ -120,7 +117,7 @@ class MapsActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
-            REQUEST_FINE_LOCATION -> {
+            viewModel.REQUEST_FINE_LOCATION -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
 
                 }

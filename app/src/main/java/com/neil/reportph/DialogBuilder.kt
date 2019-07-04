@@ -6,14 +6,12 @@ import android.view.View
 import java.util.*
 
 class DialogBuilder {
-    companion object {
-        private val calendar = Calendar.getInstance()
-        private val yy = calendar.get(Calendar.YEAR)
-        private val mm = calendar.get(Calendar.MONTH)
-        private val dd = calendar.get(Calendar.DAY_OF_MONTH)
-        private val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        private val minute = calendar.get(Calendar.MINUTE)
-    }
+    private val calendar = Calendar.getInstance()
+    private val yy = calendar.get(Calendar.YEAR)
+    private val mm = calendar.get(Calendar.MONTH)
+    private val dd = calendar.get(Calendar.DAY_OF_MONTH)
+    private val hour = calendar.get(Calendar.HOUR_OF_DAY)
+    private val minute = calendar.get(Calendar.MINUTE)
 
     private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var timePickerDialog: TimePickerDialog

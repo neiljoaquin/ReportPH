@@ -17,11 +17,10 @@ fun setOnClickListener(edit_text: EditText, listener: View.OnClickListener) {
 
 @BindingAdapter("focusChangeListener")
 fun setFocusChangeListener(edit_text: EditText, listener: View.OnFocusChangeListener) {
-    edit_text.setOnFocusChangeListener(listener)
+    edit_text.onFocusChangeListener = listener
 }
 
 @BindingAdapter("navigationOnClickListener")
 fun setNavigationOnClickListener(toolbar: Toolbar, listener: View.OnClickListener) {
-    //TODO find equivalent for lower version
     toolbar.setNavigationOnClickListener(listener)
 }

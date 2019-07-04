@@ -23,7 +23,7 @@
 
         <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                app:navigationIcon="@drawable/baseline_close_white_24"
+                app:navigationIcon="@drawable/baseline_close_24"
                 app:titleTextColor="@color/quantum_white_100"
                 android:layout_width="match_parent"
                 android:visibility="@{viewModel.visibilityLayout}"
@@ -106,7 +106,7 @@
                                         android:id="@+id/edit_text_other"
                                         android:text="@={viewModel.crime}"
                                         android:visibility="@{viewModel.visibilityOtherCrime}"
-                                        android:hint="Type of crime"/>
+                                        android:hint="@string/type_of_crime"/>
 
                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -166,7 +166,7 @@
                                         android:layout_height="wrap_content"
                                         android:id="@+id/edit_text_description"
                                         android:text="@={viewModel.description}"
-                                        android:hint="@string/describe"/>
+                                        android:hint="@string/describe_what_happened"/>
 
                             </com.google.android.material.textfield.TextInputLayout>
 

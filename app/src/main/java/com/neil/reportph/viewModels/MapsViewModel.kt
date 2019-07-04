@@ -18,23 +18,22 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
+import com.neil.reportph.Constants
 import com.neil.reportph.Logger
+import com.neil.reportph.R
 import com.neil.reportph.firebase.FirebaseStorage
 import com.neil.reportph.models.Reports
 import com.neil.reportph.activities.ReportCrimeActivity
 import io.reactivex.schedulers.Schedulers
 
 class MapsViewModel: ViewModel() {
-    companion object {
-        const val LAT_LNG = "LatLng"
-        const val MIN_ZOOM = 15f
-        val TEMP_PLACE_TEST = LatLng(14.84, 120.28)
-        const val BUFFER = 0.4
-        const val REQUEST_FINE_LOCATION = 0
-        const val TAG = "MapsViewModel"
-    }
-    val visibilityReport: MutableLiveData<Int> = MutableLiveData<Int>()
-    val visibilityCancel: MutableLiveData<Int> = MutableLiveData<Int>()
+    private val TAG = "MapsViewModel"
+    val MIN_ZOOM = 15f
+    val TEMP_PLACE_TEST = LatLng(14.84, 120.28)
+    val BUFFER = 0.4
+    val REQUEST_FINE_LOCATION = 0
+    val visibilityReport: MutableLiveData<Int> = MutableLiveData()
+    val visibilityCancel: MutableLiveData<Int> = MutableLiveData()
     var map: GoogleMap? = null
     private var workerThread: Thread? = null
 
@@ -100,7 +99,8 @@ class MapsViewModel: ViewModel() {
         if(isReport && visibilityReport.value != View.GONE) {
             visibilityReport.value = View.GONE
             visibilityCancel.value = View.VISIBLE
-            Snackbar.make(view, "Click on the map where the incident happened", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(view, view.context.getString(R.string.click_on_the_map_where_the_incident_happened),
+                Snackbar.LENGTH_LONG).show()
         } else if(!isReport && visibilityReport.value != View.VISIBLE) {
             visibilityReport.value = View.VISIBLE
             visibilityCancel.value = View.GONE
@@ -140,7 +140,7 @@ class MapsViewModel: ViewModel() {
         Logger.d(TAG, "start activity")
         val intent = Intent(activity, ReportCrimeActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            putExtra(LAT_LNG, latLng)
+            putExtra(Constants.LAT_LNG, latLng)
         }
         activity.startActivity(intent)
     }

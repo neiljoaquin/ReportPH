@@ -1,32 +1,20 @@
 <resources>
     <string name="app_name">ReportPh</string>
-    <string name="title_activity_maps">Map</string>
 
-    <string name="date_range">Date range</string>
-    <string name="distance_range">Distance range</string>
     <string name="report_crime">Report Crime</string>
+    <!-- Maps activity -->
+    <string name="click_on_the_map_where_the_incident_happened">Click on the map where the incident happened</string>
 
+    <!-- Report crime activity -->
+    <string name="type_of_crime">Type of crime</string>
     <string name="report_a_crime">Report a crime</string>
-
     <string name="date">Date</string>
     <string name="time">Time</string>
-    <string name="describe">Describe what happened</string>
-
-    <string name="need_phone_number">We\'ll send you a code to your phone number to verify if you\'re a real user</string>
-    <string name="phone_numer">+639212345678</string>
-    <string name="please_enter_code">Please enter the code:</string>
-    <string name="code">Code</string>
-    <string name="submit">Submit</string>
-    <string name="submit_number">Submit (%1$d)</string>
-    <string name="retry_sending_code">Retry sending code</string>
-    <string name="cancel">Cancel (%1$d)</string>
-
+    <string name="describe_what_happened">Describe what happened</string>
     <string name="date_template">%1$s/%2$s/%3$s</string>
     <string name="time_template">%1$s:%2$s %3$s</string>
-
     <string name="submit_report">Submit report</string>
-    <string name="input_necessary_information">Please input the necessary information!</string>
-
+    <string name="please_make_sure_you_have_input_on_all_fields">Please make sure you have input on all fields</string>
     <string-array name="crime_array">
         <item>Holdup</item>
         <item>Pickpocket</item>
