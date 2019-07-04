@@ -57,7 +57,7 @@ class MapsActivity : AppCompatActivity() {
         super.onResume()
         Logger.d(TAG, "onResume")
         if(viewModel.visibilityReport.value != View.VISIBLE) {
-            viewModel.map?.setOnMapClickListener{p0 -> onMapClick(p0)}
+            viewModel.switchVisibilityReportButton(false)
         }
     }
 

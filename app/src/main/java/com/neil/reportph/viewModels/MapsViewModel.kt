@@ -97,16 +97,18 @@ class MapsViewModel: ViewModel() {
     fun setOnMapClickListener(view: View, isReport: Boolean) {
 
         if(isReport && visibilityReport.value != View.GONE) {
-            visibilityReport.value = View.GONE
-            visibilityCancel.value = View.VISIBLE
+            switchVisibilityReportButton(isReport)
             Snackbar.make(view, view.context.getString(R.string.click_on_the_map_where_the_incident_happened),
                 Snackbar.LENGTH_LONG).show()
         } else if(!isReport && visibilityReport.value != View.VISIBLE) {
-            visibilityReport.value = View.VISIBLE
-            visibilityCancel.value = View.GONE
+            switchVisibilityReportButton(isReport)
         }
     }
 
+    fun switchVisibilityReportButton(isReport: Boolean) {
+        visibilityReport.value = if (isReport) View.GONE else View.VISIBLE
+        visibilityCancel.value = if (isReport) View.VISIBLE else View.GONE
+    }
 
     private fun onNextReport(report: Reports) {
         val latLng = LatLng(report.latitude, report.longtitude)

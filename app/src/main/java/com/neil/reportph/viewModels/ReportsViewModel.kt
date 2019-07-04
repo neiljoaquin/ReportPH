@@ -54,7 +54,7 @@ class ReportsViewModel: ViewModel() {
     }
 
     fun onSetDate(view: DatePicker, yy: Int, mm: Int, dd: Int, context: Context){
-        val date = String.format(context.getString(R.string.date_template), mm, dd+1, yy)
+        val date = String.format(context.getString(R.string.date_template), dd, mm+1, yy)
         Logger.i(TAG, "set date: $date")
         this.date.value = date
     }
